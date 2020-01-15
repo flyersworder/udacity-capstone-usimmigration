@@ -1,1 +1,74 @@
-# udacity-capstone-usimmigration
+# Does Diversity Attract Diversity: Business Travellers to U.S. Cities
+### Data Engineering Capstone Project
+
+#### Project Summary
+
+
+The project follows the follow steps:
+* Step 1: Scope the Project and Gather Data
+* Step 2: Explore and Assess the Data
+* Step 3: Define the Data Model
+* Step 4: Run ETL to Model the Data
+* Step 5: Complete Project Write Up
+
+### Step 1: Scope the Project and Gather Data
+
+#### Scope 
+The United States is famous for its diversity, a melting pot or a dream that attracts people from different origins and backgrounds. We always think that diversity is beneficial, yet we don't have that many proofs from an economic perspective, particularly from a city level. This project intends to show some evidence on this regard by aggregating the business travellers to the U.S. and associate their diversity to the characteristics of the city. It thus shows us some insights on whether diversity indeed attracts diversity.
+
+#### Describe and Gather Data 
+The datasets are provided by Udacity. I draw data from three sources.
+
+* **I94 Immigration Data**: This data comes from the US National Tourism and Trade Office. [This](https://travel.trade.gov/research/reports/i94/historical/2016.html) is where the data comes from. For this project, I only use the immigrants who enter the US for business purpose.
+* **U.S. City Demographic Data**: This data comes from [OpenSoft](https://public.opendatasoft.com/explore/dataset/us-cities-demographics/export/). I use it to extract the demographic information of various cities in the U.S..
+* **Airport Code Table**: This is a simple table of airport codes and corresponding cities and it comes from [here](https://datahub.io/core/airport-codes#data). It is for bridging the data from previous two sources.
+
+### Step 2: Explore and Assess the Data
+#### Explore the Data 
+In this session I identify data quality issues, like missing values, duplicate data, etc for each tables, i.e., business_travellers_table, city_demographics_table, and airport_codes_table.
+
+#### Cleaning Steps
+1. The business travellers table
+    * **Origins**: The origins (*i94cit* column) of these business travellers contain many invalid codes. Since we can't cateogrize these origins, we can either group them into a new category called 'unknow' or filter them out. It is difficult to peer into this unknown category so I decide to get rid of it. Beside, the portion of this category is very small (around 0.3%). 
+    * **Age**: For age there are also null values and it is very difficult to interpret. But luckily it is also a very small portion so I can easily remove it.
+    * **Gender**: There are also many null values in gender. Since people may have various reasons to not to reveal their genders, and it is largely a self-identified issue, I keep the categories intact.
+    * Problem of multiple entries. Unfortunately, we miss a unique identifier for each person. For some reason the long cicid field does not persist in the sas file. But luckily it also makes sense for diversity calculation: if a place constantly attracts like-minded people, it is less diverse.
+
+2. The city demographics table
+    * For this table, there are also some null values, for example, in the columns such as *Male Population*, *Female Population*, and *Foreign-born*. Since there are only a few cases, I decide to delete them from the dataset.
+
+3. The airport codes table
+    * There are also some null values in this table, for example, in the columns *iata_code* and *municipality*. Since I need to use all the three columns for matching, I can only drop all the null values.
+
+### Step 3: Define the Data Model
+#### 3.1 Conceptual Data Model
+The conceptual data model includes two dim tables, i.e., *airport codes table* and *city demographics table*, and one fact table, i.e., *business travellers table*. Because I aim for a longitudinal study, in the long term the *city demographics table* should also become a fact table with annual data. 
+
+#### 3.2 Mapping Out Data Pipelines
+I use pyspark to read the data from the source (ideally from s3 buckets), process the data, and output the tables as parquet files to another s3 buckets. Essentially it is a data lake that read different kinds of files (e.g., sas and csv) and then store them into the s3 buckets.
+
+### Step 4: Run Pipelines to Model the Data 
+#### 4.1 Create the data model
+The data model has already been structured in the previous steps inside the data processing enabled by pyspark. The only step missing is to export these processed files as parquets to the s3 buckets.
+
+#### 4.2 Data Quality Checks
+There are several ways to do the quality checks for our datasets:
+ * Check there are still null values in the tables after the cleaning process. We could assume that there won't be any null values except for the *gender* field.
+ * Check the differences in the number of records between different tables. We could assume that we have much more airports than the ones that receive immigrants, and that we have much more cities than airports.
+ * Check whether the travellers are unique: whether there is any duplicates in their ids.
+ 
+#### 4.3 Data dictionary 
+In this session I create a data dictionary to explain the fields in all the tables.
+
+#### 4.4 Data analysis
+I attempt to do some data analysis, primarily calculating different diversity scores for both the business immigrants and the U.S. cities. I then connect these two tables through the airports table and illustrate whether there is indeed a trend.
+For the method to calculate the diversity score, I simply adopt the [Herfindahl Index](https://en.wikipedia.org/wiki/Herfindahl%E2%80%93Hirschman_Index).
+In this attempt, I will simply compare the origins of business immigrant to the races in the local community.
+
+#### Step 5: Complete Project Write Up
+* Clearly state the rationale for the choice of tools and technologies for the project.
+* Propose how often the data should be updated and why.
+* Write a description of how you would approach the problem differently under the following scenarios:
+* The data was increased by 100x.
+* The data populates a dashboard that must be updated on a daily basis by 7am every day.
+* The database needed to be accessed by 100+ people.
