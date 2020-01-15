@@ -11,6 +11,11 @@ The project follows the follow steps:
 * Step 4: Run ETL to Model the Data
 * Step 5: Complete Project Write Up
 
+The files in this respository are:
+* etl.py: Execute the ETL process plus some quality checks
+* analysis.py: An attempt to utilize the data to do some analysis.
+* jupyter notebook is a draft that illustrates the thought process.
+
 ### Step 1: Scope the Project and Gather Data
 
 #### Scope 
