@@ -62,6 +62,31 @@ There are several ways to do the quality checks for our datasets:
 #### 4.3 Data dictionary 
 In this session I create a data dictionary to explain the fields in all the tables.
 
+#### 1. Business travellers table
+- cicid: It is supposed to be some unique identifier to each immigrant, but for some reason it is deprecated in the sas files.
+- year: Entering year.
+- month: Entering month.
+- port: Codes for the entering airport.
+- origin: Origins of the immigrant. Each number respresents a different origin.
+- age: Age of the immigrant.
+- gender: Gender of the immigrant.
+
+#### 2. City demographics table
+- city: Name of the city.
+- state: Two-letter state code.
+- median_age: The median age of the city residents.
+- male_population: Male population of the city.
+- female_population: Female population of the city.
+- total_population: Total population of the city.
+- foreign_born: Number of foreign born residents.
+- race: Race category.
+- count: Population for each race category.
+
+#### 3. Airport codes table
+- iata_code: Airport codes.
+- region: Two-letter state code.
+- municipality: City name.
+
 #### 4.4 Data analysis
 I attempt to do some data analysis, primarily calculating different diversity scores for both the business immigrants and the U.S. cities. I then connect these two tables through the airports table and illustrate whether there is indeed a trend.
 For the method to calculate the diversity score, I simply adopt the [Herfindahl Index](https://en.wikipedia.org/wiki/Herfindahl%E2%80%93Hirschman_Index).
