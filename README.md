@@ -51,6 +51,8 @@ I use pyspark to read the data from the source (ideally from s3 buckets), proces
 #### 4.1 Create the data model
 The data model has already been structured in the previous steps inside the data processing enabled by pyspark. The only step missing is to export these processed files as parquets to the s3 buckets.
 
+![ERN](https://github.com/flyersworder/udacity-capstone-usimmigration/blob/master/ERD.png)
+
 #### 4.2 Data Quality Checks
 There are several ways to do the quality checks for our datasets:
  * Check there are still null values in the tables after the cleaning process. We could assume that there won't be any null values except for the *gender* field.
