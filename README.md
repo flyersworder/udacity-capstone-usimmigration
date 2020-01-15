@@ -65,7 +65,11 @@ I attempt to do some data analysis, primarily calculating different diversity sc
 For the method to calculate the diversity score, I simply adopt the [Herfindahl Index](https://en.wikipedia.org/wiki/Herfindahl%E2%80%93Hirschman_Index).
 In this attempt, I will simply compare the origins of business immigrant to the races in the local community.
 
-#### Step 5: Complete Project Write Up
+Later on, I figure that we can do more and gain more insights from this data. So I create a profile for business immigrants, including the features such as the diversity of their origins, total number of business immigrants, and their median age per port. Similarly, I also create a profile for cities, investigating the median age of their residents and the diversity of residents' races. I then calculate the correlation between these two profiles and plot a heatmap. Unsurpringly there are not much useful insights given these cross-sectional data. The most interesting insights may be the negative correlations between the two diversity scores and the total number of immigrants. A high degree of diversity may cause some barriers to hinder the incoming immigrants.
+
+![heatmap](https://github.com/flyersworder/udacity-capstone-usimmigration/blob/master/heatmap.png)
+
+### Step 5: Complete Project Write Up
 * Clearly state the rationale for the choice of tools and technologies for the project.
 * Propose how often the data should be updated and why.
 * Write a description of how you would approach the problem differently under the following scenarios:
