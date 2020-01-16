@@ -12,9 +12,9 @@ The project follows the follow steps:
 * Step 5: Complete Project Write Up
 
 The files in this respository are:
-* etl.py: Execute the ETL process plus some quality checks
-* analysis.py: An attempt to utilize the data to do some analysis.
-* jupyter notebook is a draft that illustrates the thought process.
+* [etl.py](https://github.com/flyersworder/udacity-capstone-usimmigration/blob/master/etl.py): Execute the ETL process plus some quality checks. Specifically, I use Spark to retreive data from different sources, process the data, and write them into the data lake as parquet files.
+* [analysis.py](https://github.com/flyersworder/udacity-capstone-usimmigration/blob/master/analysis.py): An attempt to utilize the data to do some analysis. I create profiles for both business immigrants and cities, connect the tables through the airport codes, and explore the correlations between various features.
+* [This jupyter notebook](https://github.com/flyersworder/udacity-capstone-usimmigration/blob/master/Capstone%20Project%20Thought%20Process.ipynb) is a draft that illustrates the whole thought process.
 
 ### Step 1: Scope the Project and Gather Data
 
