@@ -21,6 +21,7 @@ def create_spark_session():
     spark = SparkSession \
         .builder \
         .config("spark.jars.packages", "saurfang:spark-sas7bdat:2.0.0-s_2.11") \
+        .config("org.apache.hadoop:hadoop-aws:2.7.0") \
         .enableHiveSupport().getOrCreate()
     return spark
 
