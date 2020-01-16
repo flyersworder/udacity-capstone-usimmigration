@@ -9,7 +9,7 @@ The project follows the follow steps:
 * Step 2: Explore and Assess the Data
 * Step 3: Define the Data Model
 * Step 4: Run ETL to Model the Data
-* Step 5: Complete Project Write Up
+* Step 5: Wrap Up, Future Scenarios, and Further Thoughts
 
 The files in this respository are:
 * [etl.py](https://github.com/flyersworder/udacity-capstone-usimmigration/blob/master/etl.py): Execute the ETL process plus some quality checks. Specifically, I use Spark to retreive data from different sources, process the data, and write them into the data lake as parquet files.
@@ -101,10 +101,17 @@ Later on, I figure that we can do more and gain more insights from this data. So
 
 ![heatmap](https://github.com/flyersworder/udacity-capstone-usimmigration/blob/master/heatmap.png)
 
-### Step 5: Complete Project Write Up
-* Clearly state the rationale for the choice of tools and technologies for the project.
-* Propose how often the data should be updated and why.
-* Write a description of how you would approach the problem differently under the following scenarios:
-* The data was increased by 100x.
-* The data populates a dashboard that must be updated on a daily basis by 7am every day.
-* The database needed to be accessed by 100+ people.
+### Step 5: Wrap Up, Future Scenarios, and Further Thoughts
+* The rationale for the choice of tools and technologies for the project.
+Firstly, I choose to focus on the business travellers because they are less likely to be influenced by factors such as ticket prices and weather and more likely to be attracted by the characteristics of the local community.
+Secondly, I use Apache Spark to build a data lake for the variety of different data sources (and potentially more sources in the future) and also its scalability. Using cloud storage such as Amazon S3 makes this solution highly scalable and adaptable, given both the increase of data amount and users.
+* Data and table renew and update.
+I plan to do a longitudinal study with annual data. So ideally the model should be updated yearly. However, I still can't find a reliable source for the city demographics data. It is a huge effort to collect this data.
+Ideally, with enough annual data, we can perform more sophisticated analyses such as [DID](https://en.wikipedia.org/wiki/Difference_in_differences) and certain [matching methods](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC2943670/) to reveal the causal relationship.
+* Some future scenarios:
+- The data was increased by 100x.
+The current solution with Spark and S3 is quite scalable for big data. We only need to increase the computing power and cloud storage in this case.
+- The data populates a dashboard that must be updated on a daily basis by 7am every day.
+It is almost a completely different usage. In this case we probably are more interested in the daily imports and exports of immigrants and thus need to focus on other variables in the data such as arrival dates and departure dates. Assuming that this data is updated daily as sas files, we need to schedule a daily data extraction with tools such as Apache Airflow to retreive and process the data and do some quality checks. Luckily, current ETL process is highly modularized and can be easily modified to run as daily tasks in Airflow.
+- The database needed to be accessed by 100+ people.
+I think it can be well handled by Amazon S3.
